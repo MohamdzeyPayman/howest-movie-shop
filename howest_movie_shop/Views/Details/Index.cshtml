@@ -1,0 +1,35 @@
+﻿@model howest_movie_shop.Library.DTO.MovieDTO;
+<section id="moviedetails">
+    <img src="~/images/@Model.CoverUrl" alt="@Model.Title" title="@Model.Title">
+    <h2>
+        @Model.Title
+    </h2>
+    <div>
+        <form method="post" action="@Url.Action("AddToCart","Movie")">
+            <div class="info">
+                <input type="hidden" name="movieId" value="234" />
+                <input type="submit"
+                       value="Order"
+                       name="Order"
+                       id="orderButton" />
+            </div>
+        </form>
+        <br />
+        <p><span>Rating <strong>@Model.Top250Rank</strong></span></p>
+        <p><span>Genre <strong>@Model.genres.FirstOrDefault().Name</strong></span></p>
+        <p><span>Year <strong>@Model.Year</strong></span></p>
+        <p><span>Plot <strong>@Model.Plot</strong></span></p>
+        <p>
+            <span>
+                Actors:
+                @foreach (var person in Model.persons)
+                {
+                    <strong>@person.Name</strong>
+                }
+
+
+            </span>
+        </p>
+    </div>
+</section>
+

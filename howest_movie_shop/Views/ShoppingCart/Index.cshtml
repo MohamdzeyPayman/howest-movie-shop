@@ -1,0 +1,48 @@
+﻿@model List<howest_movie_shop.Library.DTO.MovieDTO>;
+
+<section id="cart">
+    <div id="cartoverview">
+        @if (Model == null || Model.Count == 0)
+        {
+            <h2>Your shopping cart is empty. Please click here to move to home page</h2><a href="@Url.Action("", "Movie")">Click here</a>
+        }
+        else
+        {
+            <h2>Your shopping cart</h2>
+            <p>You have selected the following movies so far:</p>
+            <div class="items">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Movie</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ double total = 0;
+                            foreach (var movie in Model)
+                            {
+                                total = total + Convert.ToDouble(movie.UnitPrice);
+                                <tr>
+                                    <td>@movie.Title</td>
+                                    <td>€ @movie.UnitPrice</td>
+                                </tr>
+                            }
+                        }
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td>
+                                Total:€ @total
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <a class="order" href="@Url.Action("","Order")">Proceed to checkout</a>
+        }
+    </div>
+</section>

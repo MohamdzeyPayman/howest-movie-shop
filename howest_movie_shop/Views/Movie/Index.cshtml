@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<howest_movie_shop.Library.DTO.MovieDTO>;
+
+@{
+    var random = new Random();
+    int index = random.Next(Model.Count);
+
+}
+<section id="movieoftheday">
+    <a href="">
+        <h2>
+            Movie of the day
+        </h2>
+        <img src="~/images/@Model[index].CoverUrl" alt="@Model[index].Title" title="@Model[index].Title">
+        <div>
+            <p>
+                <span>
+                    Each day we select a different movie for you to enjoy.
+                    The perfect start for the perfect evening.
+                </span>
+            </p>
+            <p><span>Today's special pick is</span> <strong>@Model[index].Title</strong></p>
+        </div>
+    </a>
+</section>
+<aside>
+    <p><span>@Model.Count</span> deliverable movies and counting!</p>
+</aside>
+<section id="collection">
+    <h2>Our collection of movies</h2>
+    <p>
+        Browse our large selection of movies and have your favorite movie delivered to you at a moment
+        of your choosing
+    </p>
+    <p>Stay home, We care about your health.</p>
+    <form method="post" action="@Url.Action("Search","Movie")">
+        <button type="submit" class="order">Search</button>
+        <input type="search"
+               name="SearchValue"
+               id="SearchValue" />
+        <label>Sort items by</label>
+        <select id="SortKey" name="SortKey">
+            <option value="Title">Title</option>
+            <option value="Year">Year</option>
+        </select>
+        <select id="SortOrder" name="SortOrder">
+            <option value="asc">asc</option>
+            <option value="desc">desc</option>
+        </select>
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HJnPNQk5rNIhHjl_m0Pjs6BmK1V4upO2FeVc6ZPeKAMLwluRIyHDdsyu9SR2-MbD2ygFZ8l7kVIdfHo2HezeCxWhtaz7WQHDhrlx5wpjpwDkf1JgEn3agniuoYo_Nc_JjFb4YG4qlvbMjNXZR9_5LLk9wsUW6ixC3zgTUZOHcJ_exyBDf2_ZkQvTk3WmOHV-Q" />
+    </form>
+    <div class="flexcontainer">
+        @foreach (var movie in Model)
+        {
+            <article>
+                <a href="@Url.Action("","Details",new { movieId = movie.Id})">
+                    <h3>@movie.Title</h3>
+                    <figure>
+                        <img src="~/images/@movie.CoverUrl"
+                             alt="@movie.Title"
+                             title="@movie.Title">
+                        <figcaption>
+                            Year: <span>@movie.Year</span>
+                        </figcaption>
+                    </figure>
+                </a>
+                <form method="post" action="@Url.Action("AddToCart","Movie")">
+                    <div class="info">
+                        <p>€ <span>@movie.UnitPrice</span>/pp</p>
+                        <input type="hidden" name="movieId" value="@movie.Id" />
+                        <input type="submit"
+                               value="Order"
+                               name="Order"
+                               id="orderButton" />
+                    </div>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8HJnPNQk5rNIhHjl_m0Pjs6BmK1V4upO2FeVc6ZPeKAMLwluRIyHDdsyu9SR2-MbD2ygFZ8l7kVIdfHo2HezeCxWhtaz7WQHDhrlx5wpjpwDkf1JgEn3agniuoYo_Nc_JjFb4YG4qlvbMjNXZR9_5LLk9wsUW6ixC3zgTUZOHcJ_exyBDf2_ZkQvTk3WmOHV-Q" />
+                </form>
+            </article>
+        }
+
+    </div>
+</section>
